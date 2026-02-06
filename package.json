@@ -39,17 +39,22 @@
     "ai-icons",
     "llm"
   ],
-  "main": "./dist/glass-ripple.js",
+  "main": "./dist/glass-ripple.umd.cjs",
   "module": "./dist/glass-ripple.js",
   "types": "./dist/glass-ripple.d.ts",
+  "unpkg": "./dist/glass-ripple.umd.cjs",
+  "jsdelivr": "./dist/glass-ripple.js",
+  "browser": "./dist/glass-ripple.js",
   "exports": {
     ".": {
+      "types": "./dist/glass-ripple.d.ts",
       "import": "./dist/glass-ripple.js",
-      "types": "./dist/glass-ripple.d.ts"
+      "require": "./dist/glass-ripple.umd.cjs"
     },
     "./icons": {
+      "types": "./dist/icons/index.d.ts",
       "import": "./dist/icons/index.js",
-      "types": "./dist/icons/index.d.ts"
+      "require": "./dist/icons/index.umd.cjs"
     }
   },
   "files": [
@@ -60,7 +65,8 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "build:lib": "vite build --config vite.lib.config.ts",
+    "build:lib": "vite build --config vite.lib.config.ts && vite build --config vite.umd.config.ts && vite build --config vite.umd-icons.config.ts",
+    "build:site": "vite build --config vite.site.config.ts",
     "preview": "vite preview",
     "typecheck": "tsc --noEmit",
     "prepublishOnly": "pnpm build:lib"
@@ -70,9 +76,11 @@
   },
   "devDependencies": {
     "@lobehub/icons": "^4.2.0",
+    "@tweakpane/core": "^2.0.5",
     "@types/three": "^0.182.0",
     "playwright": "^1.58.2",
     "three": "^0.170.0",
+    "tweakpane": "^4.0.5",
     "typescript": "^5.9.3",
     "vite": "^6.0.0",
     "vite-plugin-dts": "^4.0.0"

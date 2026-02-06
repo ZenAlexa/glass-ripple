@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>glass-ripple — CodePen Demo</title>
+  <style>
+    /* Full-page canvas, no scrollbars */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { width: 100%; height: 100%; overflow: hidden; background: #050505; }
+    canvas { display: block; width: 100%; height: 100%; }
+  </style>
+</head>
+<body>
+
+<!-- The canvas element — glass-ripple renders everything here -->
+<canvas id="canvas"></canvas>
+
+<!--
+  Import maps let us use bare module specifiers in the browser.
+  Three.js is loaded from esm.sh CDN.
+  glass-ripple is loaded from jsdelivr CDN.
+-->
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://esm.sh/three@0.170.0",
+    "glass-ripple": "https://cdn.jsdelivr.net/npm/glass-ripple@2.1.0/dist/glass-ripple.js",
+    "glass-ripple/icons": "https://cdn.jsdelivr.net/npm/glass-ripple@2.1.0/dist/icons/index.js"
+  }
+}
+</script>
+
+<script type="module">
+  // Step 1: Import the library and an icon preset
+  import { GlassRipple } from 'glass-ripple';
+  import { claude } from 'glass-ripple/icons';
+
+  // Step 2: Create the effect — that's it!
+  const ripple = new GlassRipple({
+    canvas: document.getElementById('canvas'),
+    icon: claude.icon,       // 52 presets available: openai, gemini, deepseek, cursor...
+    background: '#050505',   // dark background for contrast
+  });
+
+  // -------------------------------------------------------
+  // Optional: cycle through different AI icons every 3 seconds
+  // Uncomment the block below to see the crossfade transitions
+  // -------------------------------------------------------
+  /*
+  import { openai, gemini, deepseek, mistral, cursor } from 'glass-ripple/icons';
+
+  const icons = [claude, openai, gemini, deepseek, mistral, cursor];
+  let index = 0;
+
+  setInterval(async () => {
+    index = (index + 1) % icons.length;
+    await ripple.setIcon(icons[index].icon);
+  }, 3000);
+  */
+</script>
+
+</body>
+</html>
