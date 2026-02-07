@@ -24,164 +24,37 @@
     <!-- Inline SVG favicon -->
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='40' fill='none' stroke='%23D97757' stroke-width='6' opacity='0.8'/><circle cx='50' cy='50' r='24' fill='none' stroke='%23D97757' stroke-width='4' opacity='0.5'/><circle cx='50' cy='50' r='10' fill='%23D97757'/></svg>" />
 
-    <script type="module" crossorigin src="/glass-ripple/assets/index-DJVocj9j.js"></script>
-    <link rel="stylesheet" crossorigin href="/glass-ripple/assets/index-DhjGxuGL.css">
+    <script type="module" crossorigin src="/glass-ripple/assets/index-B7Qtw9JL.js"></script>
+    <link rel="stylesheet" crossorigin href="/glass-ripple/assets/index-BTCS_Rl4.css">
   </head>
   <body>
-    <!-- Fixed full-screen WebGL background -->
-    <canvas id="canvas"></canvas>
-
-    <!-- Scrollable content over canvas -->
-    <div id="content">
-
-      <!-- HERO -->
-      <section id="hero">
-        <div class="hero-inner">
-          <h1 class="hero-title">Glass Ripple</h1>
-          <p class="hero-subtitle">The Hero Effect for the AI Agent Era</p>
-          <div class="install-bar">
-            <code id="install-cmd">npm install glass-ripple</code>
-            <button id="copy-btn" aria-label="Copy install command">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
-              <span id="copy-label">Copy</span>
-            </button>
-          </div>
-          <div class="hero-links">
-            <a href="https://github.com/ZenAlexa/glass-ripple" target="_blank" rel="noopener" class="hero-badge">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
-              GitHub
-            </a>
-            <a href="https://www.npmjs.com/package/glass-ripple" target="_blank" rel="noopener" class="hero-badge hero-badge--npm">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M0 7.334v8h6.666v1.332H12v-1.332h12v-8H0zm6.666 6.664H5.334v-4H3.999v4H1.335V8.667h5.331v5.331zm4 0v1.336H8.001V8.667h5.334v5.331h-2.669zm12.001 0h-1.33v-4h-1.336v4h-1.335v-4h-1.33v4h-2.671V8.667h8.002v5.331zM10.665 10H12v2.667h-1.335V10z"/></svg>
-              npm
-            </a>
-          </div>
+    <div id="app">
+      <div id="canvas-wrap">
+        <canvas id="canvas"></canvas>
+        <div class="overlay overlay--radial"></div>
+        <div class="overlay overlay--fade"></div>
+      </div>
+      <div id="text-overlay">
+        <h1 id="title">Claude</h1>
+        <div class="install-bar">
+          <code id="install-cmd">npm install glass-ripple</code>
+          <button id="copy-btn" aria-label="Copy install command">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+            <span id="copy-label">Copy</span>
+          </button>
         </div>
-        <div class="scroll-indicator" aria-hidden="true">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 13l5 5 5-5M7 6l5 5 5-5"/></svg>
+        <div class="hero-links">
+          <a href="https://github.com/ZenAlexa/glass-ripple" target="_blank" rel="noopener" class="hero-badge">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+            GitHub
+          </a>
+          <a href="https://www.npmjs.com/package/glass-ripple" target="_blank" rel="noopener" class="hero-badge">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M0 7.334v8h6.666v1.332H12v-1.332h12v-8H0zm6.666 6.664H5.334v-4H3.999v4H1.335V8.667h5.331v5.331zm4 0v1.336H8.001V8.667h5.334v5.331h-2.669zm12.001 0h-1.33v-4h-1.336v4h-1.335v-4h-1.33v4h-2.671V8.667h8.002v5.331zM10.665 10H12v2.667h-1.335V10z"/></svg>
+            npm
+          </a>
         </div>
-      </section>
-
-      <!-- FEATURES -->
-      <section id="features">
-        <h2 class="section-title">Why Glass Ripple</h2>
-        <div class="features-grid">
-          <div class="feature-card">
-            <div class="feature-icon">
-              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#D97757" stroke-width="1.5"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
-            </div>
-            <h3>11-Pass Shader Pipeline</h3>
-            <p>Wave simulation, normal mapping, Gaussian blur, compositing, dual halftone, chromatic aberration, CRT scanlines, vignette. All GPU-accelerated.</p>
-          </div>
-          <div class="feature-card">
-            <div class="feature-icon">
-              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#D97757" stroke-width="1.5"><circle cx="12" cy="12" r="3"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
-            </div>
-            <h3>52 AI Brand Icons</h3>
-            <p>Claude, GPT, Gemini, DeepSeek, Midjourney, Cursor, Vercel and 45 more. Every major AI brand, ready to drop in.</p>
-          </div>
-          <div class="feature-card">
-            <div class="feature-icon">
-              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#D97757" stroke-width="1.5"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/><line x1="6" y1="7" x2="6" y2="7" stroke-linecap="round"/><line x1="10" y1="7" x2="10" y2="7" stroke-linecap="round"/></svg>
-            </div>
-            <h3>CRT Retro Aesthetics</h3>
-            <p>Scanlines, phosphor glow, chromatic aberration, halftone dots. A cinematic, nostalgic feel that makes hero sections unforgettable.</p>
-          </div>
-          <div class="feature-card">
-            <div class="feature-icon">
-              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#D97757" stroke-width="1.5"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/><line x1="14" y1="4" x2="10" y2="20"/></svg>
-            </div>
-            <h3>3 Lines to Deploy</h3>
-            <p>Import, create, done. Full TypeScript support, tree-shakable icons, works with any framework or vanilla JS.</p>
-          </div>
-        </div>
-      </section>
-
-      <!-- PLAYGROUND -->
-      <section id="playground">
-        <h2 class="section-title">Interactive Playground</h2>
-        <p class="section-desc">Drag your mouse over the background. Tweak parameters in real time.</p>
-        <div class="playground-layout">
-          <div id="tweakpane-container"></div>
-          <button id="copy-config-btn" class="btn btn--accent">Copy Config</button>
-          <button id="reset-btn" class="btn btn--ghost">Reset Defaults</button>
-        </div>
-      </section>
-
-      <!-- ICON GALLERY -->
-      <section id="gallery">
-        <h2 class="section-title">Icon Gallery <span class="badge">52 Presets</span></h2>
-        <div id="gallery-tabs" class="gallery-tabs" role="tablist"></div>
-        <div id="gallery-grid" class="gallery-grid"></div>
-      </section>
-
-      <!-- CODE EXAMPLES -->
-      <section id="code">
-        <h2 class="section-title">Quick Start</h2>
-        <div class="code-tabs" role="tablist">
-          <button class="code-tab active" data-tab="vanilla" role="tab">Vanilla JS</button>
-          <button class="code-tab" data-tab="icons" role="tab">With Icons</button>
-          <button class="code-tab" data-tab="cdn" role="tab">CDN</button>
-        </div>
-        <div class="code-panels">
-          <div class="code-panel active" id="panel-vanilla">
-            <div class="code-block">
-              <button class="code-copy-btn" aria-label="Copy code">Copy</button>
-              <pre><code><span class="kw">import</span> { GlassRipple } <span class="kw">from</span> <span class="str">'glass-ripple'</span>
-
-<span class="kw">const</span> ripple = <span class="kw">new</span> <span class="fn">GlassRipple</span>({
-  canvas: document.<span class="fn">getElementById</span>(<span class="str">'canvas'</span>)
-})</code></pre>
-            </div>
-          </div>
-          <div class="code-panel" id="panel-icons">
-            <div class="code-block">
-              <button class="code-copy-btn" aria-label="Copy code">Copy</button>
-              <pre><code><span class="kw">import</span> { GlassRipple } <span class="kw">from</span> <span class="str">'glass-ripple'</span>
-<span class="kw">import</span> { claude } <span class="kw">from</span> <span class="str">'glass-ripple/icons'</span>
-
-<span class="kw">const</span> ripple = <span class="kw">new</span> <span class="fn">GlassRipple</span>({
-  canvas: document.<span class="fn">getElementById</span>(<span class="str">'canvas'</span>),
-  icon: claude.icon,
-})
-ripple.<span class="fn">setTint</span>(<span class="str">'#D97757'</span>)</code></pre>
-            </div>
-          </div>
-          <div class="code-panel" id="panel-cdn">
-            <div class="code-block">
-              <button class="code-copy-btn" aria-label="Copy code">Copy</button>
-              <pre><code><span class="kw">&lt;script</span> <span class="attr">type</span>=<span class="str">"importmap"</span><span class="kw">&gt;</span>
-{
-  <span class="str">"imports"</span>: {
-    <span class="str">"three"</span>: <span class="str">"https://cdn.jsdelivr.net/npm/three@0.170/build/three.module.js"</span>
-  }
-}
-<span class="kw">&lt;/script&gt;</span>
-<span class="kw">&lt;script</span> <span class="attr">type</span>=<span class="str">"module"</span><span class="kw">&gt;</span>
-<span class="kw">import</span> { GlassRipple } <span class="kw">from</span> <span class="str">'https://cdn.jsdelivr.net/npm/glass-ripple/dist/glass-ripple.js'</span>
-<span class="kw">&lt;/script&gt;</span></code></pre>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- FOOTER -->
-      <footer id="footer">
-        <div class="footer-inner">
-          <div class="footer-brand">
-            <span class="footer-name">Glass Ripple</span>
-            <span class="footer-version">v2.1.0</span>
-          </div>
-          <div class="footer-links">
-            <a href="https://github.com/ZenAlexa/glass-ripple" target="_blank" rel="noopener">GitHub</a>
-            <a href="https://www.npmjs.com/package/glass-ripple" target="_blank" rel="noopener">npm</a>
-            <span>MIT License</span>
-          </div>
-          <p class="footer-tech">Built with Three.js + WebGL2</p>
-        </div>
-      </footer>
-
+      </div>
+      <nav id="icon-picker" aria-label="Icon presets"></nav>
     </div>
-
   </body>
 </html>
