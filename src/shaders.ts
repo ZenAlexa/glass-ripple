@@ -148,7 +148,7 @@ void main() {
   fragColor = color / total;
 }`;
 
-// Composite: refraction + specular lighting + shadow
+// Composite: refraction + color-adaptive specular lighting + shadow
 export const compositeFrag = /* glsl */ `
 precision highp float;
 in vec2 vUv;
@@ -162,6 +162,10 @@ const vec3 VIEW_POS  = vec3(0.0, 0.0, 2.0);
 const float SPECULAR = 2.4;
 const float SHININESS = 128.0;
 const float REFRACTION_AMOUNT = 0.442;
+
+float luma(vec3 c) {
+  return dot(c, vec3(0.299, 0.587, 0.114));
+}
 
 vec3 calculateLighting(vec3 n, vec2 uv) {
   vec3 pos = vec3(uv * 2.0 - 1.0, 0.0);
@@ -189,21 +193,31 @@ void main() {
   vec3 refN = texture(uNormals, refractedUv).rgb;
   vec3 light = calculateLighting(refN, refractedUv);
 
+  // Color-adaptive specular: tint highlights with icon's local color
+  float baseLuma = luma(base.rgb);
+  float iconMask = smoothstep(0.02, 0.08, baseLuma);
+  vec3 tintColor = base.rgb / (baseLuma + 0.001);
+  vec3 specTint = mix(vec3(1.0), tintColor, iconMask * 0.85);
+
   // Shadow: gentle modulation, ~0.93 at rest
   vec3 lightDir = normalize(LIGHT_POS - vec3(vUv * 2.0 - 1.0, 0.0));
   float shadow = dot(normal, lightDir) * 0.25 + 0.75;
 
-  vec3 col = base.rgb * clamp(shadow, 0.0, 1.5) + light * 0.15;
+  // Add subtle colored bloom near icon edges
+  vec3 colorBloom = base.rgb * iconMask * 0.08;
+
+  vec3 col = base.rgb * clamp(shadow, 0.0, 1.5) + light * 0.15 * specTint + colorBloom;
   fragColor = vec4(col, base.a);
 }`;
 
-// Halftone dot pattern
+// Halftone dot pattern with color-adaptive tinting
 export const halftoneFrag = /* glsl */ `
 precision mediump float;
 in vec2 vUv;
 out vec4 fragColor;
 
 uniform sampler2D uTexture;
+uniform sampler2D uBase;
 uniform vec2 uResolution;
 uniform vec3 uTint;
 uniform float uMix;
@@ -240,8 +254,15 @@ void main() {
   vec4 tex = texture(uTexture, vUv);
   if (tex.a < 0.001) { fragColor = vec4(0); return; }
 
+  // Color-adaptive tint: blend uniform tint with icon's saturated local color
+  vec3 localColor = texture(uBase, vUv).rgb;
+  float localLuma = luma(localColor);
+  // Boost saturation for vivid halftone dots
+  vec3 saturated = mix(vec3(localLuma), localColor, 1.8);
+  vec3 effectiveTint = mix(uTint, saturated, smoothstep(0.02, 0.08, localLuma));
+
   float g = 1.0 - halftone(vUv, 1.0 - luma(tex.rgb));
-  vec4 ht = vec4(mix(vec3(g), uTint, 1.0 - g * g), 1.0) * tex.a;
+  vec4 ht = vec4(mix(vec3(g), effectiveTint, 1.0 - g * g), 1.0) * tex.a;
 
   fragColor = mix(tex, ht, uMix);
 }`;
@@ -274,13 +295,14 @@ void main() {
   fragColor = center;
 }`;
 
-// CRT retro screen
+// CRT retro screen with color-adaptive icon tinting
 export const retroScreenFrag = /* glsl */ `
 precision highp float;
 in vec2 vUv;
 out vec4 fragColor;
 
 uniform sampler2D uTexture;
+uniform sampler2D uBase;
 uniform float uTime;
 uniform vec2 uResolution;
 uniform float uCellScale;
@@ -340,6 +362,13 @@ void main() {
   // Flicker
   float flicker = 1.0 + 0.03 * cos(sampleUv.x / 60.0 + uTime * 20.0);
   col *= mix(1.0, flicker, uGlow);
+
+  // Color-adaptive: reinforce icon's local color in CRT output
+  vec3 iconColor = texture(uBase, sampleUv).rgb;
+  float iconLuma = dot(iconColor, vec3(0.299, 0.587, 0.114));
+  float iconMask = smoothstep(0.03, 0.10, iconLuma);
+  vec3 pureColor = iconColor / max(iconLuma, 0.01);
+  col *= mix(vec3(1.0), clamp(pureColor, 0.3, 3.0), iconMask * 0.35);
 
   fragColor = mix(src, vec4(col, src.a), 1.0);
 }`;

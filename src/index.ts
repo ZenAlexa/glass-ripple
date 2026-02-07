@@ -57,11 +57,11 @@ for (const [category, presets] of presetsByCategory) {
       btn.innerHTML = icon.svg;
     }
 
-    btn.addEventListener('click', () => {
+    btn.addEventListener('click', async () => {
       activeBtn?.classList.remove('active');
       btn.classList.add('active');
       activeBtn = btn;
-      gr.setIcon(preset.icon);
+      await gr.setIcon(preset.icon);
       if (preset.color) gr.setTint(preset.color);
 
       titleEl.classList.add('fade-out');

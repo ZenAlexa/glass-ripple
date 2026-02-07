@@ -108,7 +108,7 @@ export class GlassRipple {
   private blurHRT!: THREE.WebGLRenderTarget;
   private blurVRT!: THREE.WebGLRenderTarget;
   private baseRT!: THREE.WebGLRenderTarget;
-  private prevBaseRT!: THREE.WebGLRenderTarget;
+  private prevFinalRT!: THREE.WebGLRenderTarget;
   private postA!: THREE.WebGLRenderTarget;
   private postB!: THREE.WebGLRenderTarget;
 
@@ -258,12 +258,6 @@ export class GlassRipple {
   }
 
   async setIcon(icon: IconConfig): Promise<void> {
-    // Snapshot current base into prevBaseRT for crossfade
-    if (this.baseTex && this.W > 0) {
-      this.blitMat.uniforms.uTexture.value = this.baseTex;
-      this.pass(this.blitMat, this.prevBaseRT);
-    }
-
     if (isSvgPath(icon)) {
       this.iconConfig = { ...DEFAULT_ICON_OPTS, ...icon };
       this.cachedIconImage = null;
@@ -298,7 +292,7 @@ export class GlassRipple {
       this.blurHRT,
       this.blurVRT,
       this.baseRT,
-      this.prevBaseRT,
+      this.prevFinalRT,
       this.postA,
       this.postB,
     ];
@@ -341,6 +335,7 @@ export class GlassRipple {
 
       this.halftone1Mat = makeMat(halftoneFrag, {
         uTexture: { value: null },
+        uBase: { value: null },
         uResolution: { value: new THREE.Vector2() },
         uTint: { value: new THREE.Vector3(...c1.tint) },
         uMix: { value: c1.mix },
@@ -349,6 +344,7 @@ export class GlassRipple {
       });
       this.halftone2Mat = makeMat(halftoneFrag, {
         uTexture: { value: null },
+        uBase: { value: null },
         uResolution: { value: new THREE.Vector2() },
         uTint: { value: new THREE.Vector3(...c2.tint) },
         uMix: { value: c2.mix },
@@ -378,6 +374,7 @@ export class GlassRipple {
       };
       this.retroMat = makeMat(retroScreenFrag, {
         uTexture: { value: null },
+        uBase: { value: null },
         uTime: { value: 0 },
         uResolution: { value: new THREE.Vector2() },
         uCellScale: { value: c.cellScale },
@@ -419,7 +416,7 @@ export class GlassRipple {
       this.blurHRT,
       this.blurVRT,
       this.baseRT,
-      this.prevBaseRT,
+      this.prevFinalRT,
       this.postA,
       this.postB,
     ].forEach((rt) => rt?.dispose());
@@ -430,7 +427,7 @@ export class GlassRipple {
     this.blurHRT = makeRT(this.QW, this.QH, true);
     this.blurVRT = makeRT(this.QW, this.QH, true);
     this.baseRT = makeRT(this.W, this.H);
-    this.prevBaseRT = makeRT(this.W, this.H);
+    this.prevFinalRT = makeRT(this.W, this.H);
     this.postA = makeRT(this.W, this.H);
     this.postB = makeRT(this.W, this.H);
   }
@@ -496,27 +493,9 @@ export class GlassRipple {
     this.prevSmooth.copy(this.smoothMouse);
     this.smoothMouse.lerp(this.mouse, this.waveConfig.momentum);
 
-    // 1. Blit base texture (with crossfade if transitioning)
-    if (this.isTransitioning) {
-      const elapsed = time - this.crossfadeStartTime;
-      const raw = Math.min(elapsed / GlassRipple.CROSSFADE_DURATION, 1);
-      const eased = 1 - (1 - raw) ** 3; // cubic ease-out
-
-      // Blit new baseTex → postB (temp)
-      this.blitMat.uniforms.uTexture.value = this.baseTex;
-      this.pass(this.blitMat, this.postB);
-
-      // Crossfade prevBaseRT + postB → baseRT
-      this.crossfadeMat.uniforms.uTextureA.value = this.prevBaseRT.texture;
-      this.crossfadeMat.uniforms.uTextureB.value = this.postB.texture;
-      this.crossfadeMat.uniforms.uMix.value = eased;
-      this.pass(this.crossfadeMat, this.baseRT);
-
-      if (raw >= 1) this.isTransitioning = false;
-    } else {
-      this.blitMat.uniforms.uTexture.value = this.baseTex;
-      this.pass(this.blitMat, this.baseRT);
-    }
+    // 1. Blit base texture → baseRT (always, crossfade happens at the end)
+    this.blitMat.uniforms.uTexture.value = this.baseTex;
+    this.pass(this.blitMat, this.baseRT);
 
     // 2. Wave simulation
     for (let i = 0; i < this.waveConfig.steps; i++) {
@@ -555,6 +534,7 @@ export class GlassRipple {
 
     if (this.halftone1Mat) {
       this.halftone1Mat.uniforms.uTexture.value = src.texture;
+      this.halftone1Mat.uniforms.uBase.value = this.baseRT.texture;
       this.halftone1Mat.uniforms.uResolution.value.copy(this.res);
       this.pass(this.halftone1Mat, dst);
       swap();
@@ -562,6 +542,7 @@ export class GlassRipple {
 
     if (this.halftone2Mat) {
       this.halftone2Mat.uniforms.uTexture.value = src.texture;
+      this.halftone2Mat.uniforms.uBase.value = this.baseRT.texture;
       this.halftone2Mat.uniforms.uResolution.value.copy(this.res);
       this.pass(this.halftone2Mat, dst);
       swap();
@@ -577,19 +558,38 @@ export class GlassRipple {
 
     if (this.retroMat) {
       this.retroMat.uniforms.uTexture.value = src.texture;
+      this.retroMat.uniforms.uBase.value = this.baseRT.texture;
       this.retroMat.uniforms.uTime.value = t;
       this.retroMat.uniforms.uResolution.value.copy(this.res);
       this.pass(this.retroMat, dst);
       swap();
     }
 
+    // Apply vignette to RT (not directly to screen)
     if (this.vignetteMat) {
       this.vignetteMat.uniforms.uTexture.value = src.texture;
       this.vignetteMat.uniforms.uResolution.value.copy(this.res);
-      this.pass(this.vignetteMat, null);
+      this.pass(this.vignetteMat, dst);
+      swap();
+    }
+
+    // Output to screen: post-pipeline crossfade eliminates CRT ghost amplification
+    if (this.isTransitioning) {
+      const elapsed = time - this.crossfadeStartTime;
+      const raw = Math.min(elapsed / GlassRipple.CROSSFADE_DURATION, 1);
+      const eased = 1 - (1 - raw) ** 3; // cubic ease-out
+
+      this.crossfadeMat.uniforms.uTextureA.value = this.prevFinalRT.texture;
+      this.crossfadeMat.uniforms.uTextureB.value = src.texture;
+      this.crossfadeMat.uniforms.uMix.value = eased;
+      this.pass(this.crossfadeMat, null);
+
+      if (raw >= 1) this.isTransitioning = false;
     } else {
+      // Output to screen and save for future crossfade
       this.blitMat.uniforms.uTexture.value = src.texture;
       this.pass(this.blitMat, null);
+      this.pass(this.blitMat, this.prevFinalRT);
     }
   }
 }
