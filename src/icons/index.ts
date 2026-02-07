@@ -60,6 +60,66 @@ export { fireworks } from './fireworks';
 export { cloudflare } from './cloudflare';
 export { apple } from './apple';
 
+// Social & Media
+export { x } from './x';
+export { linkedin } from './linkedin';
+export { youtube } from './youtube';
+export { tiktok } from './tiktok';
+export { spotify } from './spotify';
+export { netflix } from './netflix';
+export { discord } from './discord';
+export { reddit } from './reddit';
+export { snapchat } from './snapchat';
+export { pinterest } from './pinterest';
+export { twitch } from './twitch';
+export { telegram } from './telegram';
+export { whatsapp } from './whatsapp';
+
+// Enterprise
+export { microsoft } from './microsoft';
+export { amazon } from './amazon';
+export { adobe } from './adobe';
+export { oracle } from './oracle';
+export { salesforce } from './salesforce';
+export { sap } from './sap';
+export { atlassian } from './atlassian';
+export { dell } from './dell';
+export { hp } from './hp';
+export { shopify } from './shopify';
+export { wordpress } from './wordpress';
+export { figma } from './figma';
+export { slack } from './slack';
+export { zoom } from './zoom';
+export { dropbox } from './dropbox';
+
+// DevOps & Data
+export { docker } from './docker';
+export { kubernetes } from './kubernetes';
+export { mongodb } from './mongodb';
+export { postgresql } from './postgresql';
+export { redis } from './redis';
+export { steam } from './steam';
+export { amd } from './amd';
+
+// Finance
+export { stripe } from './stripe';
+export { visa } from './visa';
+export { mastercard } from './mastercard';
+export { paypal } from './paypal';
+export { airbnb } from './airbnb';
+
+// Brands
+export { tesla } from './tesla';
+export { nike } from './nike';
+export { toyota } from './toyota';
+export { mercedes } from './mercedes';
+export { volkswagen } from './volkswagen';
+export { mcdonalds } from './mcdonalds';
+export { nintendoswitch } from './nintendoswitch';
+export { uber } from './uber';
+export { bmw } from './bmw';
+export { starbucks } from './starbucks';
+
 // ── Imports for allPresets ────────────────────────────────────────────────
 
 import { claude } from './claude';
@@ -114,6 +174,56 @@ import { together } from './together';
 import { fireworks } from './fireworks';
 import { cloudflare } from './cloudflare';
 import { apple } from './apple';
+import { x } from './x';
+import { linkedin } from './linkedin';
+import { youtube } from './youtube';
+import { tiktok } from './tiktok';
+import { spotify } from './spotify';
+import { netflix } from './netflix';
+import { discord } from './discord';
+import { reddit } from './reddit';
+import { snapchat } from './snapchat';
+import { pinterest } from './pinterest';
+import { twitch } from './twitch';
+import { telegram } from './telegram';
+import { whatsapp } from './whatsapp';
+import { microsoft } from './microsoft';
+import { amazon } from './amazon';
+import { adobe } from './adobe';
+import { oracle } from './oracle';
+import { salesforce } from './salesforce';
+import { sap } from './sap';
+import { atlassian } from './atlassian';
+import { dell } from './dell';
+import { hp } from './hp';
+import { shopify } from './shopify';
+import { wordpress } from './wordpress';
+import { figma } from './figma';
+import { slack } from './slack';
+import { zoom } from './zoom';
+import { dropbox } from './dropbox';
+import { docker } from './docker';
+import { kubernetes } from './kubernetes';
+import { mongodb } from './mongodb';
+import { postgresql } from './postgresql';
+import { redis } from './redis';
+import { steam } from './steam';
+import { amd } from './amd';
+import { stripe } from './stripe';
+import { visa } from './visa';
+import { mastercard } from './mastercard';
+import { paypal } from './paypal';
+import { airbnb } from './airbnb';
+import { tesla } from './tesla';
+import { nike } from './nike';
+import { toyota } from './toyota';
+import { mercedes } from './mercedes';
+import { volkswagen } from './volkswagen';
+import { mcdonalds } from './mcdonalds';
+import { nintendoswitch } from './nintendoswitch';
+import { uber } from './uber';
+import { bmw } from './bmw';
+import { starbucks } from './starbucks';
 
 export const allPresets: IconPreset[] = [
   // AI Models
@@ -127,6 +237,19 @@ export const allPresets: IconPreset[] = [
   langchain, openrouter, replicate, colab, dify, windsurf, cline,
   // Cloud & Infra
   nvidia, aws, azure, googlecloud, together, fireworks, cloudflare, apple,
+  // Social & Media
+  x, linkedin, youtube, tiktok, spotify, netflix, discord, reddit,
+  snapchat, pinterest, twitch, telegram, whatsapp,
+  // Enterprise
+  microsoft, amazon, adobe, oracle, salesforce, sap, atlassian,
+  dell, hp, shopify, wordpress, figma, slack, zoom, dropbox,
+  // DevOps & Data
+  docker, kubernetes, mongodb, postgresql, redis, steam, amd,
+  // Finance
+  stripe, visa, mastercard, paypal, airbnb,
+  // Brands
+  tesla, nike, toyota, mercedes, volkswagen, mcdonalds, nintendoswitch,
+  uber, bmw, starbucks,
 ];
 
 /** Presets grouped by category for UI rendering */

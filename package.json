@@ -1,7 +1,7 @@
 {
   "name": "glass-ripple",
-  "version": "2.2.0",
-  "description": "The hero effect for the AI agent era — GPU-accelerated glass ripple with CRT retro aesthetics, 52+ AI brand icons, 11-pass WebGL2 shader pipeline",
+  "version": "2.3.0",
+  "description": "The hero effect for the AI agent era — GPU-accelerated glass ripple with CRT retro aesthetics, 100+ brand icons, 11-pass WebGL2 shader pipeline",
   "author": "Ziming Wang",
   "license": "MIT",
   "type": "module",

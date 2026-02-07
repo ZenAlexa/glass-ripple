@@ -4,7 +4,7 @@
 
 **The hero effect for the AI agent era.**
 
-Every AI company needs a landing page that feels alive. Glass-ripple is an 11-pass WebGL2 shader pipeline that turns any `<canvas>` into a reactive, physical surface — with real-time wave physics, CRT retro aesthetics, and 52+ built-in brand icons for the entire AI ecosystem.
+Every AI company needs a landing page that feels alive. Glass-ripple is an 11-pass WebGL2 shader pipeline that turns any `<canvas>` into a reactive, physical surface — with real-time wave physics, CRT retro aesthetics, and 100+ built-in brand icons spanning AI, tech, social media, finance, and more.
 
 [![npm version](https://img.shields.io/npm/v/glass-ripple?color=D97757)](https://www.npmjs.com/package/glass-ripple)
 [![npm downloads](https://img.shields.io/npm/dm/glass-ripple)](https://www.npmjs.com/package/glass-ripple)
@@ -12,7 +12,7 @@ Every AI company needs a landing page that feels alive. Glass-ripple is an 11-pa
 [![TypeScript](https://img.shields.io/badge/lang-TypeScript-3178c6)](https://www.typescriptlang.org/)
 [![WebGL2](https://img.shields.io/badge/WebGL2-GLSL%20300%20ES-orange)]()
 [![Three.js](https://img.shields.io/badge/Three.js-r170+-049ef4)](https://threejs.org/)
-[![icons](https://img.shields.io/badge/icons-52%2B%20AI%20brands-D97757)]()
+[![icons](https://img.shields.io/badge/icons-102%20brands-D97757)]()
 
 <br />
 
@@ -32,7 +32,7 @@ Every AI company needs a landing page that feels alive. Glass-ripple is an 11-pa
 
 Glass-ripple fixes that. Drop it into any page and your hero section becomes a **living, breathing surface** — one that responds to every mouse movement with real water physics, light refraction, halftone textures, and CRT scanlines. All computed on the GPU. All in a single `<canvas>`.
 
-**Built for the agent era:** 52 AI brand icons ship out of the box — from Claude to DeepSeek, from Cursor to Cloudflare Workers AI. Swap icons at runtime with a single call. Build agent dashboards, AI product pages, or model comparison UIs that actually feel like the future.
+**Built for the agent era:** 102 brand icons ship out of the box — AI models, social platforms, enterprise tech, DevOps tools, finance, and iconic consumer brands. Swap icons at runtime with a single call. Build agent dashboards, AI product pages, or any landing page that actually feels like the future.
 
 ## Quick Start
 
@@ -56,11 +56,11 @@ Three lines. Zero config. Ship it.
 
 - **11-pass shader pipeline** — wave sim → normal map → blur → composite → halftone ×2 → chromatic aberration → CRT → vignette
 - **Real-time wave physics** — 2D wave equation at ¼ resolution with continuous mouse wake via line-segment distance
-- **52+ AI ecosystem icons** — models, agents, dev tools, creative AI, cloud infra. Tree-shakeable, import only what you need
+- **102 brand icons across 9 categories** — AI models, creative AI, dev tools, cloud infra, social media, enterprise, DevOps, finance, and consumer brands. Tree-shakeable
 - **Runtime everything** — swap icons, tint colors, wave physics (`setWave()`) — all live, no reload
 - **TypeScript-first** — full type definitions, discriminated union for icon configs, async-aware API
 - **Single `<canvas>`** — no extra DOM, no iframes, no dependencies beyond Three.js
-- **Extensible** — bring any SVG path or full SVG markup. The 52 built-ins are just the start — PRs for new icons land in hours
+- **Extensible** — bring any SVG path or full SVG markup. The 102 built-ins are just the start — PRs for new icons land in hours
 
 ## Shader Pipeline
 
@@ -92,7 +92,7 @@ Wave simulation runs on a ping-pong framebuffer at quarter resolution. Post-effe
 
 ## Icon Presets
 
-52 built-in presets covering the AI ecosystem as of early 2026. All use Simple Icons standard (`viewBox 0 0 24 24`, single path). Import individually for tree-shaking.
+102 built-in presets across 9 categories. All use Simple Icons standard (`viewBox 0 0 24 24`, single path). Import individually for tree-shaking.
 
 ```ts
 import { claude, openai, deepseek } from 'glass-ripple/icons';
@@ -157,7 +157,74 @@ import { allPresets, presetsByCategory } from 'glass-ripple/icons';
 
 </details>
 
-**New model dropped?** Adding an icon is [one file + one line](./CONTRIBUTING.md#adding-icons). PRs land fast.
+<details>
+<summary><strong>Social & Media</strong> (13) — YouTube, Spotify, Discord, Reddit, TikTok...</summary>
+
+| Preset | Brand | | Preset | Brand |
+|--------|-------|-|--------|-------|
+| `x` | X (Twitter) | | `linkedin` | LinkedIn |
+| `youtube` | YouTube | | `tiktok` | TikTok |
+| `spotify` | Spotify | | `netflix` | Netflix |
+| `discord` | Discord | | `reddit` | Reddit |
+| `snapchat` | Snapchat | | `pinterest` | Pinterest |
+| `twitch` | Twitch | | `telegram` | Telegram |
+| `whatsapp` | WhatsApp | | | |
+
+</details>
+
+<details>
+<summary><strong>Enterprise</strong> (15) — Microsoft, Amazon, Adobe, Salesforce, Slack...</summary>
+
+| Preset | Brand | | Preset | Brand |
+|--------|-------|-|--------|-------|
+| `microsoft` | Microsoft | | `amazon` | Amazon |
+| `adobe` | Adobe | | `oracle` | Oracle |
+| `salesforce` | Salesforce | | `sap` | SAP |
+| `atlassian` | Atlassian | | `dell` | Dell |
+| `hp` | HP | | `shopify` | Shopify |
+| `wordpress` | WordPress | | `figma` | Figma |
+| `slack` | Slack | | `zoom` | Zoom |
+| `dropbox` | Dropbox | | | |
+
+</details>
+
+<details>
+<summary><strong>DevOps & Data</strong> (7) — Docker, Kubernetes, MongoDB, PostgreSQL...</summary>
+
+| Preset | Brand | | Preset | Brand |
+|--------|-------|-|--------|-------|
+| `docker` | Docker | | `kubernetes` | Kubernetes |
+| `mongodb` | MongoDB | | `postgresql` | PostgreSQL |
+| `redis` | Redis | | `steam` | Steam |
+| `amd` | AMD | | | |
+
+</details>
+
+<details>
+<summary><strong>Finance</strong> (5) — Stripe, Visa, Mastercard, PayPal...</summary>
+
+| Preset | Brand | | Preset | Brand |
+|--------|-------|-|--------|-------|
+| `stripe` | Stripe | | `visa` | Visa |
+| `mastercard` | Mastercard | | `paypal` | PayPal |
+| `airbnb` | Airbnb | | | |
+
+</details>
+
+<details>
+<summary><strong>Brands</strong> (10) — Tesla, Nike, Toyota, BMW, Mercedes-Benz...</summary>
+
+| Preset | Brand | | Preset | Brand |
+|--------|-------|-|--------|-------|
+| `tesla` | Tesla | | `nike` | Nike |
+| `toyota` | Toyota | | `mercedes` | Mercedes-Benz |
+| `volkswagen` | Volkswagen | | `mcdonalds` | McDonald's |
+| `nintendoswitch` | Nintendo Switch | | `uber` | Uber |
+| `bmw` | BMW | | `starbucks` | Starbucks |
+
+</details>
+
+**New brand?** Adding an icon is [one file + one line](./CONTRIBUTING.md#adding-icons). PRs land fast.
 
 ## Custom Icons
 
